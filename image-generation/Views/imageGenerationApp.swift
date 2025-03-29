@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct image_generationApp: App {
+struct imageGenerationApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .background(Color("BackgroundColor"))
         }
     }
 }

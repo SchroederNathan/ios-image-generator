@@ -9,8 +9,19 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var selectedTab: Int = 0
+    
+    var navTitle: String {
+        switch selectedTab {
+        case 0: return "Generate"
+        case 1: return "My Boards"
+        case 2: return "Profile"
+        default: return ""
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
+            NavigationBar(title: navTitle)
             
             // Main content
             ZStack {

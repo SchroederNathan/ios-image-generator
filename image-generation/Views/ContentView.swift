@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var hasStarted = false
+    @State private var hasStarted = true
     
     var body: some View {
         ZStack{

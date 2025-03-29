@@ -21,8 +21,23 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationBar(title: navTitle)
-            
+            NavigationBar {
+                Text(navTitle)
+                
+            } leading: {
+                Button(action: {}) {
+                    HStack{
+                        Image("TokenImage")
+                            .resizable()
+                            .scaledToFit()
+                        Text("10")
+                            .font(Font.custom("Poppins-Medium", size: 20))
+                            .foregroundStyle(Color("TextColor"))
+                    }
+                }
+            } trailing: {
+                Button(action: {}) { Image(systemName: "gear") }
+            }
             // Main content
             ZStack {
                 switch selectedTab {
@@ -44,7 +59,7 @@ struct HomeView: View {
                     selectedTab = 0
                 }
                 .frame(maxWidth: .infinity)
-
+                
                 TabBarButton(
                     icon: "square.grid.2x2",
                     selectedIcon: "square.grid.2x2.fill",
@@ -54,7 +69,7 @@ struct HomeView: View {
                     selectedTab = 1
                 }
                 .frame(maxWidth: .infinity)
-
+                
                 TabBarButton(
                     icon: "person.circle",
                     selectedIcon: "person.circle.fill",
@@ -67,7 +82,7 @@ struct HomeView: View {
             }
             .padding(.horizontal, 30)
             .padding(.top, 12)
-
+            
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color("BackgroundColor"))

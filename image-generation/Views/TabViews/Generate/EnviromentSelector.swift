@@ -11,33 +11,39 @@ struct EnviromentSelector: View {
     let environments = ["Interior", "Exterior"]
     
     @Binding var selectedEnvironment: String
+    @Namespace private var animation
     
     var body: some View {
-        HStack(spacing: 0) {
-            ForEach(environments, id: \.self) { environment in
-                ZStack {
-                    if selectedEnvironment == environment {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("PrimaryColor"))
-                            .frame(maxWidth: .infinity)
-                    }
-                    
+        ZStack(alignment: .leading) {
+            // Background
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color("SecondaryColor").opacity(0.3))
+                .frame(height: 50)
+            
+            // Selection indicator
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color("PrimaryColor"))
+                .frame(width: UIScreen.main.bounds.width / 2 - 20, height: 50) // Adjust width based on your padding
+                .offset(x: selectedEnvironment == "Interior" ? 0 : UIScreen.main.bounds.width / 2 - 20)
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: selectedEnvironment)
+            
+            // Text buttons
+            HStack(spacing: 0) {
+                ForEach(environments, id: \.self) { environment in
                     Text(environment)
                         .font(Font.custom("Poppins-Medium", size: 16))
                         .foregroundColor(selectedEnvironment == environment ? .white : .primary)
                         .padding(.vertical, 10)
                         .frame(maxWidth: .infinity)
-                        .contentShape(Rectangle()) // Improves tap target
-                }
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        selectedEnvironment = environment
-                    }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedEnvironment = environment
+                        }
                 }
             }
         }
-        .frame(maxHeight: 50)
+        .frame(height: 50)
         .background(Color("SecondaryColor").opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 8))    }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
 }
-

@@ -6,6 +6,11 @@ struct GenerateTabView: View {
     @State private var selectedImage: UIImage?
     @State private var prompt = ""
     
+    @State private var selectedRoomType = "Room Type" // Default room type
+    @State private var showingRoomTypePicker = false // Control sheet presentation
+    @State private var selectedStyle = "Style" // Default style
+    @State private var showingStylePicker = false // For style picker
+    
     @FocusState private var isFocused: Bool
     
     var body: some View {
@@ -18,9 +23,9 @@ struct GenerateTabView: View {
                 
                 HStack(spacing: 20) {
                     Button(action: {
-                        // TODO: Select Room Type
+                        showingRoomTypePicker = true
                     }) {
-                        Label("Room Type", systemImage: "house")
+                        Label(selectedRoomType, systemImage: "house")
                             .font(Font.custom("Poppins-Regular", size: 16))
                             .fontWeight(.medium)
                             .foregroundColor(Color("TextColor"))
@@ -28,17 +33,26 @@ struct GenerateTabView: View {
                             .background(Color("SecondaryColor").opacity(0.3))
                             .cornerRadius(8)
                     }
+                    .sheet(isPresented: $showingRoomTypePicker) {
+                        RoomTypeSelector(
+                            selectedRoomType: $selectedRoomType,
+                            environment: $selectedEnvironment
+                        )
+                    }
                     
                     Button(action: {
-                        // TODO: Select Room Style
+                        showingStylePicker = true
                     }) {
-                        Label("Style", systemImage: "paintpalette")
+                        Label(selectedStyle, systemImage: "paintpalette")
                             .font(Font.custom("Poppins-Regular", size: 16))
                             .fontWeight(.medium)
                             .foregroundColor(Color("TextColor"))
                             .frame(maxWidth: .infinity, minHeight: 50)
                             .background(Color("SecondaryColor").opacity(0.3))
                             .cornerRadius(8)
+                    }
+                    .sheet(isPresented: $showingStylePicker) {
+                        StyleTypeSelector(selectedStyleType: $selectedStyle)
                     }
                 }
                 .frame(maxWidth: .infinity)
